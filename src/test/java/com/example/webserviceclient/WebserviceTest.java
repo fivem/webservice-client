@@ -2,6 +2,7 @@ package com.example.webserviceclient;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.example.webserviceclient.transfer.impl.ProcessTypeNodeImpl;
 import com.ibm.wsdl.BindingOutputImpl;
 import com.ibm.wsdl.PartImpl;
 import com.sun.codemodel.JType;
@@ -47,6 +48,8 @@ import java.util.*;
 public class WebserviceTest extends WebserviceClientApplicationTests {
     @Autowired
     WSClient wsClient;
+    @Autowired
+    ProcessTypeNodeImpl processTypeNodeImpl;
     private PluginLoader pluginLoader = PluginLoader.newInstance();
 
     // @Test
@@ -143,7 +146,9 @@ public class WebserviceTest extends WebserviceClientApplicationTests {
         Binding binding = port.getBinding();
 
         List<? extends SchemaImpl> extensibilityElements1 = def.getTypes().getExtensibilityElements();
-
+        SchemaImpl schema = extensibilityElements1.get(0);
+        Element element = schema.getElement();
+        processTypeNodeImpl.processNode(element.getFirstChild());
         List<BindingOperation> bindingOperations = binding.getBindingOperations();
         for(BindingOperation bindingOperation : bindingOperations){
             Operation operation = bindingOperation.getOperation();
