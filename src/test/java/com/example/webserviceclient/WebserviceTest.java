@@ -131,24 +131,23 @@ public class WebserviceTest extends WebserviceClientApplicationTests {
         for(SchemaImpl schema:extensibilityElements){
             Element element = schema.getElement();
         }
-
         System.out.println("8888>"+JSONUtil.toJsonStr(def));
-
         Map<?, ?> services = def.getServices();
         System.out.println("9999>"+JSONUtil.toJsonStr(services));
         Service service = (Service)services.get(new QName(qname, "SAP21"));
-
         System.out.println("0000>"+JSONUtil.toJsonStr(services));
         Map<?, ?> ports = service.getPorts();
         System.out.println("1111>"+JSONUtil.toJsonStr(ports));
         Port port = service.getPort("sap211");
         System.out.println("2222>"+JSONUtil.toJsonStr(port));
         Binding binding = port.getBinding();
-
         List<? extends SchemaImpl> extensibilityElements1 = def.getTypes().getExtensibilityElements();
         SchemaImpl schema = extensibilityElements1.get(0);
         Element element = schema.getElement();
-        processTypeNodeImpl.processNode(element.getFirstChild());
+        processTypeNodeImpl.processNode(element,null);
+        SchemaImpl schema1 = extensibilityElements1.get(1);
+        Element element1 = schema1.getElement();
+        processTypeNodeImpl.processNode(element1,null);
         List<BindingOperation> bindingOperations = binding.getBindingOperations();
         for(BindingOperation bindingOperation : bindingOperations){
             Operation operation = bindingOperation.getOperation();
